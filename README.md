@@ -1,2 +1,2 @@
 # P2P-Lending-platform
-个人前端练习项目
+P2P借贷平台---个人前端练习项目
