@@ -10,18 +10,23 @@ class Canlendar  extends React.Component{
 		super();
 
 		//得到返回的日历数据数组
-		var {reararr,arr,headarr}=createDataTable(2019,6);
-		//合并
-		var Allarr=reararr.concat(arr).concat(headarr);
-		//拆分
-		var result=[];
-		for(var i=0;i<Allarr.length;i+=7){
+		var {reararr,arr,headarr}=createDataTable(2019,2);
+		// //合并
+		// var Allarr=reararr.concat(arr).concat(headarr);
+		// //拆分
+		// var result=[];
+		// for(var i=0;i<Allarr.length;i+=7){
 			
-			result.push(Allarr.slice(i,i+7));
-		}
+		// 	result.push(Allarr.slice(i,i+7));
+		// }
 
 		this.state={
-			"dataArr":result
+			year:2019,
+			month:2,
+			reararr,
+			arr,
+			headarr,
+			"dataArr":reararr.concat(arr,headarr)
 		}
 
 	}
@@ -29,13 +34,15 @@ class Canlendar  extends React.Component{
 
 	showDataTable(){
 		var trs=[];
-		this.state.dataArr.forEach((week,index)=>{
-			var tds=[];
-			week.forEach((day,index)=>{
-				tds.push(<td key={index}>{day}</td>);
-			});
-			trs.push(<tr key={index}>{tds}</tr>);
+		var tds=[];
+		this.state.dataArr.forEach((day,index)=>{
+			if(index%7==0 && index !=0){
+				trs.push(<tr key={index}>{tds}</tr>);
+				tds=[];
+			}
+			tds.push(<td className={index < this.state.reararr.length || index >=42-this.state.headarr.length? "gray":" "} key={index}>{day}</td>);
 		});
+		trs.push(<tr key={5}>{tds}</tr>);
 		return (
 			<tbody>{trs}</tbody>
 		)
@@ -44,7 +51,7 @@ class Canlendar  extends React.Component{
 	render(){
 		return (
 			<div className="canlendarChooser">
-				<h4>2019年4月</h4>
+				<h4>{this.state.year}年{this.state.month}月</h4>
 				<table>
 					<thead>
 						<tr>

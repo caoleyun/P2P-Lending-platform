@@ -12,7 +12,7 @@ function  _getMounthAllDays(year,month){
 	//原理是 用 下一个月  的一月一号0点0分减去1毫秒，看看是哪一天（看看那天是几号）
 	// return (new Date(new Date(year,month,1)-1)).getDay();
 
-	if(month==12){
+	if(month === 12){
 		return (new Date(new Date(year+1,0,1)-1)).getDate();
 	}else{
 		return (new Date(new Date(year,month,1)-1)).getDate();
