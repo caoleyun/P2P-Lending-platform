@@ -1,0 +1,113 @@
+@BECanlendar_box_className: .BECanlendar;
+@resultWidth:300px;
+@height:26px;
+@borderColor: #BDBDBD;
+
+@chooseBox:500px;
+
+
+
+@{BECanlendar_box_className}{
+	margin:10px;
+	width:@resultWidth;
+	position:relative;
+	font-family:"微软雅黑";
+
+
+	.result{
+		width:@resultWidth;
+		height:@height;
+		border:1px solid @borderColor;
+		border-radius:4px;
+		text-align: left;
+		line-height: @height;
+		padding-left:10px;
+		box-sizing: border-box;
+		position:relative;
+		cursor: pointer;
+		font-size: 14px;
+	}
+	.result span.canlendarbtn{
+		position:absolute;
+		right:0;
+		top:0;
+		width:40px;
+		height: @height - 2px;
+		border-left:1px solid @borderColor;
+
+		&::before{
+			position:absolute;
+			top:5px;
+			left:11px;
+			font-size:16px;
+			color:#424242;
+		}
+	}
+	.chooseBox{
+		width:@chooseBox;
+		height:70px;
+		border:1px solid @borderColor;
+		position:absolute;
+		top:38px;
+		left:0;
+		border-radius: 4px;
+		padding:10px 20px;
+		box-shadow: darkgrey 10px 10px 30px 5px ;
+
+		.begin{
+			float:left;
+			width:40%;
+			position:relative;
+		}
+		.days{
+			float:left;
+			width:20%;
+			text-align: center;
+			line-height: 50px;
+			font-size: 21px;
+			color:orange;
+
+		}
+		.end{
+			float:left;
+			width:40%;
+			position:relative;
+		}
+
+		@smallResultHeight:24px;
+		.result{
+			width:175px;
+			height:@smallResultHeight;
+
+			span.canlendarbtn{
+				font-size:16px;
+				height:@smallResultHeight - 2px;
+				width:34px;
+
+				&::before{
+					position:absolute;
+					top:5px;
+					left:9px;
+					font-size:14px;
+					color:#424242;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+@canlendarClassName: .canlendarChooser;
+
+@{canlendarClassName}{
+	position:absolute;
+	top:41px;
+	left:0;
+	width:315px;
+	height:180px;
+	border:1px solid #BDBDBD;
+	background:white;
+	box-shadow:2px 2px 1px #433e3e;
+}
