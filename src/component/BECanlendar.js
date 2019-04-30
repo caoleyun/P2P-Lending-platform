@@ -7,9 +7,9 @@ import '../static/BECanlendar.less';
 
 
 class BECanlendar  extends React.Component{
-	constructor(){
-		super();
-	}
+	// constructor(){
+	// 	super();
+	// }
 		
 		
 	render(){
@@ -34,6 +34,7 @@ class BECanlendar  extends React.Component{
 						结束日期：
 						<div className="begin_result result">
 							<span className="glyphicon glyphicon-calendar canlendarbtn"></span>
+							<Canlendar />
 						</div>
 					</div>
 				</div>
