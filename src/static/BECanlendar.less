@@ -154,18 +154,45 @@
 				width:100%;
 				padding:0 10px;
 
-				span{
-					float:left;
-					width:20%;
+				.panel_inner{
+					overflow: hidden;
+					width:100%;
+
+					.span_container{
+						position:relative;
+						top:0;
+						left:-20px;
+						width:1000px;
+	
+						span{
+							float:left;
+							width:38px;
+							border:1px solid #E0E0E0;
+						}
+					}
 				}
+
+				
+					
+
 
 				.ll{
 					position:absolute;
-					top:0;
-					left:0;
-					width:20px;
-					height:20px;
+					top:14px;
+					left:1px;
+					width:16px;
+					height:16px;
 					background:url(/images/ll.jpg);
+					background-size: contain;
+				}
+				.rr{
+					position:absolute;
+					top:14px;
+					right:1px;
+					width:16px;
+					height:16px;
+					background:url(/images/rr.jpg);
+					background-size: contain;
 				}
 			}
 
@@ -179,6 +206,11 @@
 					a{
 						display:block;
 						text-align:center;
+					}
+
+					.cur{
+						border:1px solid #000;
+						background-color:orange;
 					}
 				}
 			}
