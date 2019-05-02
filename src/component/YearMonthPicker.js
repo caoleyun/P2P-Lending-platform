@@ -1,4 +1,6 @@
 import React from "react";
+import $ from 'jquery/dist/jquery.min.js';
+
 
 
 
@@ -15,8 +17,14 @@ class YearMonthPicker  extends React.Component{
 
 	}
 		
-	rrBtnHandler(){
-		// $()
+	rrBtnHandler(cyear){
+		$(this.refs.span_container).append($(`<span>${cyear+3}</span>`)).animate({"left":-38},200,function(){
+			$(this).find("span").eq(0).remove();
+			$(this).css("left",0);
+
+			$(this).find("span").eq(1).removeClass("cur");
+			$(this).find("span").eq(2).addClass("cur");
+		});
 	}
 
 	render(){
@@ -29,14 +37,14 @@ class YearMonthPicker  extends React.Component{
 							<div className="span_container" ref="span_container">
 								<span>{cyear-2}</span>
 								<span>{cyear-1}</span>
-								<span><b>{cyear}</b></span>
+								<span className="cur">{cyear}</span>
 								<span>{cyear+1}</span>
 								<span>{cyear+2}</span>
 							</div>
 						</div>
 
 						<i className="ll"></i>
-						<i className="rr" onClick={()=>{this.rrBtnHandler()}}></i>
+						<i className="rr" onClick={()=>{this.rrBtnHandler(cyear++)}}></i>
 					</div>
 					<div className="month_panel">
 						<div className="col">
