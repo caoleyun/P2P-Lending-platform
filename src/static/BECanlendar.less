@@ -147,14 +147,20 @@
 		height:16px;
 		font-size:12px;
 		text-align: center;
+
+		&.gray{
+			color:#BDBDBD;
+		}
+		&.cur{
+			background-color:orange;
+			border-radius:50%;
+		}
+		&:hover{
+			background-color:lightblue;
+		}
+		/*解决文字双击 被选中变色？*/
 	}
-	td.gray{
-		color:#BDBDBD;
-	}
-	td.cur{
-		background-color:orange;
-		border-radius:50%;
-	}
+	
 
 
 	.YearMonthPicker{
@@ -164,6 +170,7 @@
 		background-color:rgba(0,0,0,0.6);
 		top:0;
 		left:0;
+		z-index:99;
 
 		.inner{
 			position:absolute;

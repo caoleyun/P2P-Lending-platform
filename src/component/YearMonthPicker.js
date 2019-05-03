@@ -65,6 +65,7 @@ class YearMonthPicker  extends React.Component{
 
 	//上树之后
 	componentDidMount(){
+			//此处有滚轮兼容问题待解决
 		//绑定滚轮事件
 		var self=this;
 		this.refs.span_container.onmousewheel=function(event){
@@ -79,6 +80,7 @@ class YearMonthPicker  extends React.Component{
 		$(this.refs.month_panel).find("a").click(function(){
 			// console.log(self.cyear ,self.state.year , self.state.month);
 			self.setState({"year":self.cyear,"month":Number($(this).attr("data-month"))});
+			//把值传给父亲
 			self.props.onpick(self.state);
 		});
 
