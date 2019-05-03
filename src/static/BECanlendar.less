@@ -45,14 +45,27 @@
 	}
 	.chooseBox{
 		width:@chooseBox;
-		height:70px;
 		border:1px solid @borderColor;
 		position:absolute;
 		top:38px;
 		left:0;
 		border-radius: 4px;
-		padding:10px 20px;
+		padding:4px 8px;
 		box-shadow: darkgrey 10px 10px 30px 5px ;
+		box-sizing: border-box;
+		z-index:1000;
+		padding-top:50px;
+
+		.cancelbtn{
+			position:absolute;
+			top:4px;
+			left:4px;
+		}
+		.submitbtn{
+			position:absolute;
+			top:4px;
+			right:4px;
+		}
 
 		.begin{
 			float:left;
