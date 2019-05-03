@@ -22,7 +22,9 @@ class Canlendar  extends React.Component{
 
 		this.state={
 			year:2019,
-			month:5
+			month:5,
+			day:1,
+			showPicker:false
 		}
 
 	}
@@ -33,12 +35,22 @@ class Canlendar  extends React.Component{
 		var dataArr=reararr.concat(arr,headarr);
 		var trs=[];
 		var tds=[];
+
+		let classname=(day,index)=>{
+			if(index < reararr.length || index >=42-headarr.length){
+				return "gray";
+			}else if (day===this.state.day){
+				return "cur";
+			}
+			return  "";
+		}
+
 		dataArr.forEach((day,index)=>{
 			if((index%7) === 0 && index!==0){
 				trs.push(<tr key={index}>{tds}</tr>);
 				tds=[];
 			}
-			tds.push(<td className={index < reararr.length || index >=42-headarr.length? "gray":" "} key={index}>{day}</td>);
+			tds.push(<td className={classname(day,index)} key={index}>{day}</td>);
 		});
 		trs.push(<tr key={5}>{tds}</tr>);
 		return (
@@ -64,16 +76,34 @@ class Canlendar  extends React.Component{
 		}
 	}
 		
+	onpick({year,month}){
+		this.setState({showPicker:false});
+		this.setState({
+			year:year,
+			month:month
+		});
+		console.log(year , month);
+	}
+	showpicker(){
+		if(this.state.showPicker){
+			return <YearMonthPicker year={this.state.year} month={this.state.month} ref="" onpick={(this.onpick).bind(this)} ></YearMonthPicker>;
+		}else{
+			return "";
+		}
+		
+	}
+
 	render(){
 		return (
 			<div className="canlendarChooser">
-				<h4>
-					<a onClick={(this.goPrevMonth).bind(this)}>上一月</a>
+				<h4 onClick={()=>{this.setState({showPicker:true})}}>
 					{this.state.year}年{this.state.month}月
-					<a onClick={(this.goNextMonth).bind(this)} >下一月</a>
 				</h4>
 
-				<YearMonthPicker />
+				<a onClick={(this.goPrevMonth).bind(this)} href="javascript:void(0)" className="leftBtn"></a>
+				<a onClick={(this.goNextMonth).bind(this)} href="javascript:void(0)" className="rightBtn"></a>
+
+				{this.showpicker()}
 
 				<table>
 					<thead>

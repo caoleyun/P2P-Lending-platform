@@ -2,7 +2,7 @@
 //鼠标滚轮  处理程序
 //原生
 
-
+var num=0;
 
 // __mousewheelhandler内部函数
 function _mousewheelhandler(event){
@@ -23,8 +23,10 @@ function _mousewheelhandler(event){
 				var direction = event.detail > 0 ? -1 : 1;
 			}
 
-		console.log(direction);
+			num= direction;
 
+		
+			return num;
 
 		
 }
@@ -34,13 +36,22 @@ function _mousewheelhandler(event){
 function mousewheelhandler(dom){
 		//这里不用根据不同的浏览器进行判断，这是因为事件添加了如果浏览器不认识，不报错的。
 		//给IE、CHrome添加事件
-		dom.onmousewheel = _mousewheelhandler;
-		try{
-			//给火狐添加事件
-			dom.addEventListener("DOMMouseScroll",_mousewheelhandler,false);
-		}catch(err){
-			
+		
+		
+		
+
+		dom.onmousewheel=function(){
+			var a=_mousewheelhandler();
+			return a;
 		}
+
+		// dom.onmousewheel = _mousewheelhandler;
+		// try{
+		// 	//给火狐添加事件
+		// 	dom.addEventListener("DOMMouseScroll",_mousewheelhandler,false);
+		// }catch(err){
+			
+		// }
 		
 }
 
