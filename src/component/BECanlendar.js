@@ -9,7 +9,7 @@ import $ from 'jquery/dist/jquery.min.js';
 
 
 class BECanlendar  extends React.Component{
-	constructor(){
+	constructor({onpick,earliest,latest}){
 		super();
 
 		var d=new Date();
@@ -23,9 +23,9 @@ class BECanlendar  extends React.Component{
 				"showCanlendar":false
 			},
 			"e":{
-				"year":2029,
-				"month":10,
-				"day":1,
+				"year":d.getFullYear(),
+				"month":d.getMonth()+1,
+				"day":d.getDate(),
 				"showCanlendar":false
 			},
 			showchoosebox:false
@@ -39,17 +39,24 @@ class BECanlendar  extends React.Component{
 		this.keday=this.state.e.day;
 	}
 
+	//发生在state的改变时候触发
+	componentWillUpdate(){
+		//向上传值
+		this.props.onpick(this.state.b.year,this.state.b.month,this.state.b.day,this.state.e.year,this.state.e.month,this.state.e.day);
+	}
+
 	//此组件的显示与否
 	showCanlendar1(){
 		// console.log(this.state.b.showCanlendar);
+		
 		if(this.state.b.showCanlendar){
-			return <Canlendar {...this.state.b} onpick={(this.onpick1).bind(this)} />;
+			return <Canlendar {...this.state.b} onpick={(this.onpick1).bind(this)} earliest={this.props.earliest} />;
 		}
 	}
 	showCanlendar2(){
 		// console.log(this.state.e.showCanlendar);
 		if(this.state.e.showCanlendar){
-			return <Canlendar {...this.state.e} onpick={(this.onpick2).bind(this)}  />;
+			return <Canlendar {...this.state.e} onpick={(this.onpick2).bind(this)} latest={this.props.latest} earliest={this.props.earliest}   />;
 		}
 	}
 
@@ -87,7 +94,7 @@ class BECanlendar  extends React.Component{
 		$("html").click(function(event){
 			var o = self.refs.BECanlendar;
 			if($(event.target).parents(o).length==0){
-				self.setState({"showchoosebox":false,b:{...self.state.b,showCanlendar:false},e:{...self.state.e,showCanlendar:false}});
+				self.setState({"showchoosebox":false,b:{year:self.kbyear,month:self.kbmonth,day:self.kbday,showCanlendar:false},e:{year:self.keyear,month:self.kemonth,day:self.keday,showCanlendar:false}});
 			}
 		});
 	}
@@ -168,7 +175,15 @@ class BECanlendar  extends React.Component{
 			<div className="BECanlendar" ref="BECanlendar">
 				<div className="result" onClick={(event)=>{  /*此处事件涉及事件冒泡  会覆盖*/
 						this.setState({ 
-							showchoosebox:!this.state.showchoosebox
+							showchoosebox:!this.state.showchoosebox,
+							b:{
+								...this.state.b,
+								showCanlendar:false
+							},
+							e:{
+								...this.state.e,
+								showCanlendar:false
+							}
 						}); 
 				}}>
 					{this.kbyear}年{this.kbmonth}月{this.kbday}日 - {this.keyear}年{this.kemonth}月{this.keday}日

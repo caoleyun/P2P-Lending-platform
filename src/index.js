@@ -15,10 +15,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 render(
 	<div>
-		<BECanlendar />
-		<BECanlendar />
-		<BECanlendar />
-		<BECanlendar />
-		<BECanlendar />
+		<BECanlendar onpick={ (by,bm,bd,ey,em,ed)=>{} }
+			earliest={{year:new Date().getFullYear(),month:new Date().getMonth()+1,day:new Date().getDate()}}
+			 latest={{year:2019,month:5,day:6}}
+		 />
 	</div>
 ,document.getElementById("root"));

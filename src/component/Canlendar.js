@@ -9,7 +9,7 @@ import $ from 'jquery/dist/jquery.min.js';
 
 
 class Canlendar  extends React.Component{
-	constructor({onpick,year,month,day}){
+	constructor({onpick,year,month,day,earliest,latest}){
 		super();
 
 		//得到返回的日历数据数组
@@ -38,7 +38,33 @@ class Canlendar  extends React.Component{
 		var trs=[];
 		var tds=[];
 
+		//类名函数
 		let classname=(day,index)=>{
+			//这个日的日期
+			var thedate=new Date(this.state.year,this.state.month,day);
+			if(this.props.earliest){
+				//限制的最早的日期
+				var earlistdate=new Date(this.props.earliest.year,this.props.earliest.month,this.props.earliest.day);
+				//比较
+				if(thedate-earlistdate<0){
+					return "gray earliestinvaid";
+				}
+			}
+			if(this.props.latest){
+				//限制的最早晚的日期
+				var latestdate=new Date(this.props.latest.year,this.props.latest.month,this.props.latest.day);
+				//获取 开始日期组件的 日期
+				// var hh=new Date(this.props.kk.kbyear,this.props.kk.kbmonth,this.props.kk.kbday);
+				// console.log(" 开始日期组件的 日期",this.props.kk.kbyear,this.props.kk.kbmonth,this.props.kk.kbday);
+				// //比较
+				// ////根据开始日期决定  此组件的 前面的状态
+				// if(thedate-hh<0){
+				// 	return "gray latestinvaid";
+				// }
+				if(thedate-latestdate>0){
+					return "gray latestinvaid";
+				}
+			}
 			if(index < reararr.length ){
 				return "gray prev";
 			}else if(index >=42-headarr.length){
