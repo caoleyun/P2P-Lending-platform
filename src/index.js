@@ -13,4 +13,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 
-render(<BECanlendar />,document.getElementById("root"))
+render(
+	<div>
+		<BECanlendar />
+		<BECanlendar />
+		<BECanlendar />
+		<BECanlendar />
+		<BECanlendar />
+	</div>
+,document.getElementById("root"));

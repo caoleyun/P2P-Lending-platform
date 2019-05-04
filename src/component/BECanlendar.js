@@ -1,6 +1,8 @@
 import React from "react";
 import Canlendar from './Canlendar.js';
 import '../static/BECanlendar.less';
+import $ from 'jquery/dist/jquery.min.js';
+
 
 
 
@@ -29,7 +31,12 @@ class BECanlendar  extends React.Component{
 			showchoosebox:false
 		}
 		//取消时候的 备份数据
-		
+		this.kbyear=this.state.b.year;
+		this.kbmonth=this.state.b.month;
+		this.kbday=this.state.b.day;
+		this.keyear=this.state.e.year;
+		this.kemonth=this.state.e.month;
+		this.keday=this.state.e.day;
 	}
 
 	//此组件的显示与否
@@ -74,12 +81,47 @@ class BECanlendar  extends React.Component{
 
 	}
 
+	//上树之后
+	componentDidMount(){
+		var self =this;
+		$("html").click(function(event){
+			var o = self.refs.BECanlendar;
+			if($(event.target).parents(o).length==0){
+				self.setState({"showchoosebox":false,b:{...self.state.b,showCanlendar:false},e:{...self.state.e,showCanlendar:false}});
+			}
+		});
+	}
 
+	//显示组件
 	showchoosebox(){
 			return ( 
 				<div className="chooseBox">
-					<input type="button" value="确定" className="submitbtn" />
-					<input type="button" value="取消" className="cancelbtn" />
+					<input type="button" value="确定" className="submitbtn"  onClick={(event)=>{  /*此处事件涉及事件冒泡  会覆盖*/
+						this.setState({ 
+							showchoosebox:false
+						}); 
+						this.kbyear=this.state.b.year;
+						this.kbmonth=this.state.b.month;
+						this.kbday=this.state.b.day;
+						this.keyear=this.state.e.year;
+						this.kemonth=this.state.e.month;
+						this.keday=this.state.e.day;
+					}}/>
+					<input type="button" value="取消" className="cancelbtn"  onClick={(event)=>{  /*此处事件涉及事件冒泡  会覆盖*/
+						this.setState({ 
+							showchoosebox:false,
+							b:{
+								year:this.kbyear,
+								month:this.kbmonth,
+								day:this.kbday
+							},
+							e:{
+								year:this.keyear,
+								month:this.kemonth,
+								day:this.keday
+							}
+						}); 
+					}}/>
 					<div className="begin">
 						开始日期：
 						<div className="begin_result result" >
@@ -123,17 +165,17 @@ class BECanlendar  extends React.Component{
 		// console.log(this.state.e.year,this.state.e.month,this.state.e.day);
 		
 		return (
-			<div className="BECanlendar">
+			<div className="BECanlendar" ref="BECanlendar">
 				<div className="result" onClick={(event)=>{  /*此处事件涉及事件冒泡  会覆盖*/
 						this.setState({ 
 							showchoosebox:!this.state.showchoosebox
 						}); 
 				}}>
-					2016年6月7日 - 2019年4月30日
+					{this.kbyear}年{this.kbmonth}月{this.kbday}日 - {this.keyear}年{this.kemonth}月{this.keday}日
 					<span className="glyphicon glyphicon-calendar canlendarbtn"></span>
 				</div>
 
-				{this.state.showchoosebox ? this.showchoosebox():""}
+				{this.state.showchoosebox && this.showchoosebox()}
 
 
 			</div>
