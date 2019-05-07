@@ -12,9 +12,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 let props={
-	"width" :200,
-	"min": 10,
-	"max":20
+	"width" :300,
+	"min": 100,
+	"max":7800
 }
 
 
