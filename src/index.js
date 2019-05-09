@@ -11,12 +11,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 
-let props={
-	"width" :200,
-	"min": 100,
-	"max":7800
-}
-
 
 render(
 	<div>
@@ -24,6 +18,6 @@ render(
 			earliest={{year:new Date().getFullYear(),month:new Date().getMonth()+1,day:new Date().getDate()}}
 			 latest={{year:2019,month:5,day:6}}
 		 />
-		 <Range {...props} />
+		 <Range width={300} min={100} max={7800} />
 	</div>
 ,document.getElementById("root"));
