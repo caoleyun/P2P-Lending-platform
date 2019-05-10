@@ -74,7 +74,7 @@ class Range extends React.Component{
 		                $(document).on('mousemove.drag', function(e){
 						let scaleLeftpx2number=(el.position().left)/self.smallgridwidth*self.persmallgridnumber+self.props.min;
 
-		                	console.log(scaleLeftpx2number);
+		                	// console.log(scaleLeftpx2number);
 		                	//超过边界处理
 		                	// console.log("scaleLeftpx",scaleLeftpx,"scaleRightpx",scaleRightpx,"e.pageX-dx",e.pageX-dx,"perbiggridnumber",self.perbiggridnumber,"smallgridwidth",self.smallgridwidth);
 		                	if(e.pageX-dx<lkk){
@@ -126,7 +126,46 @@ class Range extends React.Component{
 		//点击事件
 		$(self.refs.bar).click(function(event){
 			var x=event.clientX-$(this).offset().left;
-			
+			let scaleLeftpx2number=(x)/self.smallgridwidth*self.persmallgridnumber+self.props.min;
+			// console.log(scaleLeftpx2number,self.state.scaleLeft);
+
+			if(scaleLeftpx2number<self.state.scaleLeft){
+				self.setState({"scaleLeft":scaleLeftpx2number});
+				$(self.refs.left).css("left",x);
+
+				//设置蓝色线
+		        $(self.refs.span).css({
+		            "left":x,
+		     		"width":$(self.refs.right).position().left-x
+	        	});
+			}else if(scaleLeftpx2number>self.state.scaleRight){
+				self.setState({"scaleRight":scaleLeftpx2number});
+				$(self.refs.right).css("left",x);
+
+				//设置蓝色线
+		        $(self.refs.span).css({
+		     		"width":x-$(self.refs.left).position().left
+	        	});
+			}else{
+				
+				if(scaleLeftpx2number<(self.state.scaleRight-self.state.scaleLeft)/2+self.state.scaleLeft){
+					self.setState({"scaleLeft":scaleLeftpx2number});
+					$(self.refs.left).css("left",x);
+					//设置蓝色线
+			        $(self.refs.span).css({
+			            "left":x,
+			     		"width":$(self.refs.right).position().left-x
+		        	});
+				}else{
+					self.setState({"scaleRight":scaleLeftpx2number});
+					$(self.refs.right).css("left",x);
+					//设置蓝色线
+			        $(self.refs.span).css({
+			     		"width":x-$(self.refs.left).position().left
+		        	});
+				}
+			}
+
 		});
 
 	}
