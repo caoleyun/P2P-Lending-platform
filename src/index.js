@@ -14,7 +14,8 @@ import thunk from 'redux-thunk';
 
 
 
-//store
+//reducers
+import reducers from './reducers/index.js'
 
 //引入组件
 import App from './component/App.js';
@@ -22,9 +23,12 @@ import App from './component/App.js';
 //插件
 import 'bootstrap/dist/css/bootstrap.css';
 
+//css less
+import './static/Touzhi.less';
 
 const store = createStore(
   combineReducers({
+  	reducers,
     routing: routerReducer
   }),
   applyMiddleware(createLogger(),thunk)
