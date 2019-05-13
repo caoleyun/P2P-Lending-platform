@@ -1,18 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Filterbar from './Filterbar/Filterbar.js';
-import {fetchInitData} from '../actions/touzhiaction.js';
+import Nowfilter from './Nowfilter/Nowfilter.js';
+import {fetchInitData,addfilter} from '../actions/touzhiaction.js';
 
 
 class Touzhi extends React.Component{
-	constructor({school,dispatch}){
+	constructor({filters,dispatch,nowfilter}){
 		super();
-		//请求数据
-		dispatch(fetchInitData("filters"));
+		//请求默认数据数据
+		dispatch(fetchInitData());
 	}
 	//当子组件 给我们传来数据时
 	pickHandler(title,v){
 		console.log(title,v);
+		this.props.dispatch(addfilter(title,v));
 	}
 
 	render(){
@@ -21,8 +23,9 @@ class Touzhi extends React.Component{
 				<div className="container"> 
 					<div className="filterBox">
 						<div className="row">
-							<Filterbar options={this.props.school}  title="学校" onpick={(this.pickHandler).bind(this)} />
-							<Filterbar options={["哈哈","嘻嘻","卡卡"]}  title="学校" onpick={(this.pickHandler).bind(this)} />
+							<Nowfilter nowfilter={this.props.nowfilter} />
+							<Filterbar options={this.props.filters.schools}  title="学校" onpick={(this.pickHandler).bind(this)} />
+							<Filterbar options={this.props.filters.types}  title="类型" onpick={(this.pickHandler).bind(this)} />
 						</div>
 					</div>	
 				</div>
@@ -32,8 +35,9 @@ class Touzhi extends React.Component{
 }
 
 export default connect((state)=>{
-	console.log(state.reducers.touzhireducers.filter.school);
+	// console.log(state.reducers.touzhireducers.nowfilter);
 	return {
-		"school" : state.reducers.touzhireducers.filter.school
+		"filters" : state.reducers.touzhireducers.filters,
+		"nowfilter":state.reducers.touzhireducers.nowfilter
 	}
 })(Touzhi);

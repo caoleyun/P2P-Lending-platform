@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import $ from  'jquery/dist/jquery.min.js';
 
 
@@ -15,8 +14,12 @@ class Filterbar extends React.Component{
 
 	//单选 筛选
 	chooseradio(item){
+		let arr=[];
 		this.setState({"v":[item]});
-
+		//向父组件 传数据
+		arr.push(item);
+		this.props.onpick(this.props.title,arr);
+		arr=[];
 	}
 	//多选 筛选
 	choosecheckbox(){
@@ -78,13 +81,7 @@ class Filterbar extends React.Component{
 		);
 	}
 
-	componentDidUpdate(){
-		//向父组件 传数据
-		//在状态为radio的时候 我们才发送 因为checkbox的时候 点击确定按钮才发送
-		if(this.state.shape==="radio"){
-			this.submitdata();
-		}
-	}
+	
 }
 
-export default connect()(Filterbar);
+export default Filterbar;
