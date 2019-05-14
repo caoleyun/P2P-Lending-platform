@@ -1,10 +1,10 @@
 let initState={
 	"filters":{
 		"schools" : [],
-		"types":[]
+		"types":[],
+		"need":{"min":0,"max":1000}
 	},
-	"nowfilter":[
-	]
+	"nowfilter":[]
 }
 
 export default (state=initState,action)=>{
@@ -25,6 +25,13 @@ export default (state=initState,action)=>{
 					...state.nowfilter,
 					{"filtertitle":action.title,"v":action.v}
 				]
+			}
+		case "DELFILTER":
+			return {
+				...state,
+				nowfilter:state.nowfilter.filter((item)=>{
+					return item.filtertitle!=action.title;
+				})
 			}
 	}
 	return state;

@@ -8,9 +8,8 @@
 	padding:@pd;
 	padding-bottom:30px;
 	border:1px solid #000;
-	margin:100px;
 	position:relative;
-	border-box:content-box;
+	border-sizing:content-box;
 	
 	.bar{
 		height:16px;
@@ -22,9 +21,10 @@
 			position:absolute;
 			top:0px;
 			height:20px;
-			width:2px;
+			width:10px;
 			background-color:red;
 			z-index: 66;
+			cursor:pointer;
 
 			u{
 				font-style:normal;

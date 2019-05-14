@@ -8,3 +8,4 @@ export const fetchInitData=()=>{return (dispatch)=>{
 }}
 
 export const addfilter=(title,v)=>{ return {"type":"ADDFILTER",title,v}}
+export const delfilter=(title)=>{return {"type":"DELFILTER" , title} }

@@ -19,7 +19,7 @@ class Filterbar extends React.Component{
 		//向父组件 传数据
 		arr.push(item);
 		this.props.onpick(this.props.title,arr);
-		arr=[];
+		// $(this).css("display","none");
 	}
 	//多选 筛选
 	choosecheckbox(){
@@ -59,7 +59,7 @@ class Filterbar extends React.Component{
 								return <label  key={index}><input onClick={()=>{this.choosecheckbox()}} type="checkbox" key={index} value={item} />{item}</label>
 							})
 						}
-						<input type="button" className="btn btn-success" value="确定" onClick={()=>{this.submitdata()}} />
+						<input type="button" className="btn btn-success" value="确定" onClick={()=>{if(this.state.v.length===0){return "";}this.submitdata()}} />
 						{" "}
 						<input type="button" className="btn" value="取消" onClick={()=>{this.setState({"shape":"radio","v":[]})}} />
 					</div>
@@ -71,12 +71,7 @@ class Filterbar extends React.Component{
 	render(){
 		return(
 			<div className="filterbar">
-				<div className="row">
-					<div className="col-lg-1">{this.props.title}</div>
-					<div className="col-lg-11">
-						{this.showshape()}
-					</div>
-				</div>
+				{this.showshape()}
 			</div>
 		);
 	}

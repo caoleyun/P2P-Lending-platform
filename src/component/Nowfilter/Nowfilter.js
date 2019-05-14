@@ -1,8 +1,13 @@
 import React from 'react';
+import {delfilter} from '../../actions/touzhiaction.js'
 
 class Nowfilter extends React.Component{
-	constructor({nowfilter}){
+	constructor({nowfilter,dispatch}){
 		super();
+	}
+
+	delme(filtertitle){
+		this.props.dispatch(delfilter(filtertitle));
 	}
 
 	shownowfilter=()=>{
@@ -11,7 +16,7 @@ class Nowfilter extends React.Component{
 			if(index!=0){
 				arr.push(<li key={arr.length} className="t">且</li>);
 			}
-				arr.push(<li key={arr.length}>{item.filtertitle} ： {item.v.join(" 或 ")}</li>);
+				arr.push(<li onClick={()=>{this.delme(item.filtertitle)}} key={arr.length}>{item.filtertitle} ： {item.v.join(" 或 ")}</li>);
 		});
 		return (
 			<ul>
