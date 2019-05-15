@@ -11,7 +11,7 @@ import $ from 'jquery/dist/jquery.min.js';
 
 
 class Range extends React.Component{
-	constructor({width,min,max}){
+	constructor({width,min,max,onpick,title}){
 		super();
 
 		//大格的个数  向上取整
@@ -72,7 +72,7 @@ class Range extends React.Component{
 		                var el=$(this);
 		                var os = el.offset(), dx = e.pageX-os.left, dy = e.pageY-os.top;
 		                $(document).on('mousemove.drag', function(e){
-						let scaleLeftpx2number=(el.position().left)/self.smallgridwidth*self.persmallgridnumber+self.props.min;
+						let scaleLeftpx2number=Math.ceil((el.position().left)/self.smallgridwidth*self.persmallgridnumber+self.props.min);
 
 		                	// console.log(scaleLeftpx2number);
 		                	//超过边界处理
@@ -103,7 +103,7 @@ class Range extends React.Component{
 		                var el=$(this);
 		                var os = el.offset(), dx = e.pageX-os.left, dy = e.pageY-os.top;
 		                $(document).on('mousemove.drag', function(e){ 
-							let scaleLeftpx2number=(el.position().left)/self.smallgridwidth*self.persmallgridnumber+self.props.min;
+							let scaleLeftpx2number=Math.ceil((el.position().left)/self.smallgridwidth*self.persmallgridnumber+self.props.min);
 		                	//超过边界处理
 		                	if(e.pageX-dx<=scaleLeftpx){
 		                		el.offset({left: scaleLeftpx});
@@ -125,13 +125,17 @@ class Range extends React.Component{
 
 		//点击事件
 		$(self.refs.bar).click(function(event){
-			var x=event.clientX-$(this).offset().left;
-			let scaleLeftpx2number=(x)/self.smallgridwidth*self.persmallgridnumber+self.props.min;
-			// console.log(scaleLeftpx2number,self.state.scaleLeft);
+			var el=$(this);
+			var os = el.offset() , dx = event.pageX-os.left, dy = event.pageY-os.top;
 
+			var x=event.clientX-$(this).offset().left;
+			let scaleLeftpx2number=Math.ceil((x)/self.smallgridwidth*self.persmallgridnumber+self.props.min);
+			// console.log(scaleLeftpx2number,self.state.scaleLeft);
 			if(scaleLeftpx2number<self.state.scaleLeft){
 				self.setState({"scaleLeft":scaleLeftpx2number});
 				$(self.refs.left).css("left",x);
+				
+			console.log(scaleLeftpx2number,self.state.scaleLeft,event.pageX);
 
 				//设置蓝色线
 		        $(self.refs.span).css({
@@ -141,7 +145,7 @@ class Range extends React.Component{
 			}else if(scaleLeftpx2number>self.state.scaleRight){
 				self.setState({"scaleRight":scaleLeftpx2number});
 				$(self.refs.right).css("left",x);
-
+				
 				//设置蓝色线
 		        $(self.refs.span).css({
 		     		"width":x-$(self.refs.left).position().left
@@ -150,7 +154,7 @@ class Range extends React.Component{
 				
 				if(scaleLeftpx2number<(self.state.scaleRight-self.state.scaleLeft)/2+self.state.scaleLeft){
 					self.setState({"scaleLeft":scaleLeftpx2number});
-					$(self.refs.left).css("left",x);
+					$(self.refs.left).css("left",x);scaleLeftpx=event.pageX;
 					//设置蓝色线
 			        $(self.refs.span).css({
 			            "left":x,
@@ -158,7 +162,7 @@ class Range extends React.Component{
 		        	});
 				}else{
 					self.setState({"scaleRight":scaleLeftpx2number});
-					$(self.refs.right).css("left",x);
+					$(self.refs.right).css("left",x);scaleRightpx=event.pageX;
 					//设置蓝色线
 			        $(self.refs.span).css({
 			     		"width":x-$(self.refs.left).position().left
@@ -196,6 +200,7 @@ class Range extends React.Component{
 				<div className="scaleline">
 					{this.showis()}
 				</div>
+				<input type="button" value="确定" className="btn" onClick={()=>{this.props.onpick(this.props.title,this.state)}} />
 			</div>
 		)
 	}

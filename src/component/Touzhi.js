@@ -19,11 +19,39 @@ class Touzhi extends React.Component{
 	}
 	//显示过滤条
 	showfilterbar(propsobj){
-		var alreadyexsit=false;
+		let alreadyexsit=false;
 		this.props.nowfilter.forEach((item)=>{
 			(item.filtertitle===propsobj.title)&&(alreadyexsit=true);
 		});
-		return alreadyexsit?"":<Filterbar {...propsobj} />;
+		if(alreadyexsit){
+			return "";
+		}else{
+			return (<div>
+				<div className="col-lg-2 filter_t text-right">{propsobj.title}</div>
+				<div className="col-lg-10">
+					<Filterbar {...propsobj} />
+				</div>
+			</div>
+			);
+		}
+	}
+	//显示过滤条2
+	showRange(propsobj){
+		let alreadyexsit=false;
+		this.props.nowfilter.forEach((item)=>{
+			(item.filtertitle===propsobj.title)&&(alreadyexsit=true);
+		});
+		if(alreadyexsit){
+			return "";
+		}else{
+			return (<div>
+				<div className="col-lg-2 filter_t text-right">{propsobj.title}</div>
+				<div className="col-lg-10">
+					<Range  {...propsobj} />
+				</div>
+			</div>
+			);
+		}
 	}
 
 	render(){
@@ -35,8 +63,6 @@ class Touzhi extends React.Component{
 							<Nowfilter nowfilter={this.props.nowfilter} dispatch={this.props.dispatch} />
 
 							<div className="row">
-								<div className="col-lg-2 filter_t text-right">学校</div>
-								<div className="col-lg-10">
 									{
 										this.showfilterbar(
 											{
@@ -46,12 +72,9 @@ class Touzhi extends React.Component{
 											}
 										)
 									}
-								</div>
 							</div>
 
 							<div className="row">
-								<div className="col-lg-2 filter_t text-right">类型</div>
-								<div className="col-lg-10">
 									{
 										this.showfilterbar(
 											{
@@ -61,18 +84,34 @@ class Touzhi extends React.Component{
 											}
 										)
 									}
-								</div>
 							</div>
 
 							<div className="row">
-								<div className="col-lg-2 filter_t text-right">所需金额：</div>
-								<div className="col-lg-10">
-									<Range 
-										width={300} 
-										min={this.props.filters.need.min} 
-										max={this.props.filters.need.max} 
-									/>
-								</div>
+								{
+									this.showRange(
+										{
+											width:300, 
+											min:this.props.filters.need.min, 
+											max:this.props.filters.need.max,
+											title:"所需金额范围" ,
+											onpick:(this.pickHandler).bind(this)
+										}
+									)
+								}
+							</div>
+
+							<div className="row">
+								{
+									this.showRange(
+										{
+											width:300, 
+											min:this.props.filters.need.min, 
+											max:this.props.filters.need.max,
+											title:"范围" ,
+											onpick:(this.pickHandler).bind(this)
+										}
+									)
+								}
 							</div>
 							
 						</div>

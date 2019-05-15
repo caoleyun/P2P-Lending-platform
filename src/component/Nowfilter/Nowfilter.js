@@ -16,8 +16,14 @@ class Nowfilter extends React.Component{
 			if(index!=0){
 				arr.push(<li key={arr.length} className="t">且</li>);
 			}
-				arr.push(<li onClick={()=>{this.delme(item.filtertitle)}} key={arr.length}>{item.filtertitle} ： {item.v.join(" 或 ")}</li>);
+				if(item.filtertitle=="学校"||item.filtertitle=="类型"){
+					arr.push(<li onClick={()=>{this.delme(item.filtertitle)}} key={arr.length}>{item.filtertitle} ： {item.v.join(" 或 ")}</li>);
+				}else{
+					arr.push(<li onClick={()=>{this.delme(item.filtertitle)}} key={arr.length}>{item.filtertitle} ： {item.v.scaleLeft}~{item.v.scaleRight}</li>);
+				}
+			
 		});
+
 		return (
 			<ul>
 				{arr}
