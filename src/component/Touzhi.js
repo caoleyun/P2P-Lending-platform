@@ -4,6 +4,7 @@ import Filterbar from './Filterbar/Filterbar.js';
 import Nowfilter from './Nowfilter/Nowfilter.js';
 import {fetchInitData,addfilter} from '../actions/touzhiaction.js';
 import Range from './Range/Range.js';
+import BECanlendar from './BECanlendar/BECanlendar.js';
 
 
 class Touzhi extends React.Component{
@@ -14,7 +15,6 @@ class Touzhi extends React.Component{
 	}
 	//当子组件 给我们传来数据时
 	pickHandler(title,v){
-		console.log(title,v);
 		this.props.dispatch(addfilter(title,v));
 	}
 	//显示过滤条
@@ -48,6 +48,25 @@ class Touzhi extends React.Component{
 				<div className="col-lg-2 filter_t text-right">{propsobj.title}</div>
 				<div className="col-lg-10">
 					<Range  {...propsobj} />
+				</div>
+			</div>
+			);
+		}
+	}
+
+	//显示日历组件
+	showBECanlendar(propsobj){
+		let alreadyexsit=false;
+		this.props.nowfilter.forEach((item)=>{
+			(item.filtertitle===propsobj.title)&&(alreadyexsit=true);
+		});
+		if(alreadyexsit){
+			return "";
+		}else{
+			return (<div>
+				<div className="col-lg-2 filter_t text-right">{propsobj.title}</div>
+				<div className="col-lg-10">
+					<BECanlendar  {...propsobj} />
 				</div>
 			</div>
 			);
@@ -107,13 +126,32 @@ class Touzhi extends React.Component{
 											width:300, 
 											min:this.props.filters.need.min, 
 											max:this.props.filters.need.max,
-											title:"范围" ,
+											title:"预期收益范围" ,
 											onpick:(this.pickHandler).bind(this)
 										}
 									)
 								}
 							</div>
-							
+							<div className="row">
+								{
+									this.showBECanlendar({
+										onpick: (this.pickHandler).bind(this),
+										earliest:{year:new Date().getFullYear(),month:new Date().getMonth()+1,day:new Date().getDate()},
+										latest:{year:2019,month:5,day:30}, 
+
+										byear:this.props.filters.shouyiriqi.byear,
+										bmonth:this.props.filters.shouyiriqi.bmonth,
+										bday:this.props.filters.shouyiriqi.bday,
+
+										eyear:this.props.filters.shouyiriqi.eyear,
+										emonth:this.props.filters.shouyiriqi.emonth,
+										eday:this.props.filters.shouyiriqi.eday,
+
+										title:"shouyiriqi" 
+									})
+								}
+							</div>
+
 						</div>
 					</div>	
 				</div>

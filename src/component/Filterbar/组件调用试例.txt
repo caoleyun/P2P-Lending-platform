@@ -1,0 +1,6 @@
+<Filter
+	options={this.props.filters.schools}
+	title={"ѧУ" }
+	onpick={this.pickHandler.bind(this) }
+/>
+

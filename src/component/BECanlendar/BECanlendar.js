@@ -9,7 +9,7 @@ import $ from 'jquery/dist/jquery.min.js';
 
 
 class BECanlendar  extends React.Component{
-	constructor({onpick,earliest,latest}){
+	constructor({onpick,earliest,latest,title,byear,bmonth,bday,eyear,emonth,eday}){
 		super();
 
 		var d=new Date();
@@ -17,15 +17,15 @@ class BECanlendar  extends React.Component{
 		//e表示结束日期
 		this.state={
 			"b":{
-				"year":d.getFullYear(),
-				"month":d.getMonth()+1,
-				"day":d.getDate(),
+				"year":byear,
+				"month":bmonth,
+				"day":bday,
 				"showCanlendar":false
 			},
 			"e":{
-				"year":d.getFullYear(),
-				"month":d.getMonth()+1,
-				"day":d.getDate(),
+				"year":eyear,
+				"month":emonth,
+				"day":eday,
 				"showCanlendar":false
 			},
 			showchoosebox:false
@@ -39,11 +39,7 @@ class BECanlendar  extends React.Component{
 		this.keday=this.state.e.day;
 	}
 
-	//发生在state的改变时候触发
-	componentWillUpdate(){
-		//向上传值
-		this.props.onpick(this.state.b.year,this.state.b.month,this.state.b.day,this.state.e.year,this.state.e.month,this.state.e.day);
-	}
+	
 
 	//此组件的显示与否
 	showCanlendar1(){
@@ -95,8 +91,20 @@ class BECanlendar  extends React.Component{
 			var o = self.refs.BECanlendar;
 			if($(event.target).parents(o).length==0){
 				self.setState({"showchoosebox":false,b:{year:self.kbyear,month:self.kbmonth,day:self.kbday,showCanlendar:false},e:{year:self.keyear,month:self.kemonth,day:self.keday,showCanlendar:false}});
+				// self.setState = (state,callback)=>{
+				// 	return;
+				// };
+
 			}
 		});
+	}
+	
+	componentWillUnmount() {
+	  // 卸载异步操作设置状态
+	  // clearTimeout(this.timeouter)
+	  this.setState = (state, callback) => {
+	    return
+	  }
 	}
 
 	//显示组件
@@ -113,6 +121,7 @@ class BECanlendar  extends React.Component{
 						this.keyear=this.state.e.year;
 						this.kemonth=this.state.e.month;
 						this.keday=this.state.e.day;
+						this.props.onpick(this.props.title,this.state);
 					}}/>
 					<input type="button" value="取消" className="cancelbtn"  onClick={(event)=>{  /*此处事件涉及事件冒泡  会覆盖*/
 						this.setState({ 

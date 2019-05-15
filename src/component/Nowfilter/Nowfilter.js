@@ -18,8 +18,10 @@ class Nowfilter extends React.Component{
 			}
 				if(item.filtertitle=="学校"||item.filtertitle=="类型"){
 					arr.push(<li onClick={()=>{this.delme(item.filtertitle)}} key={arr.length}>{item.filtertitle} ： {item.v.join(" 或 ")}</li>);
-				}else{
+				}else if(item.filtertitle=="所需金额范围"||item.filtertitle=="预期收益范围"){
 					arr.push(<li onClick={()=>{this.delme(item.filtertitle)}} key={arr.length}>{item.filtertitle} ： {item.v.scaleLeft}~{item.v.scaleRight}</li>);
+				}else if(item.filtertitle=="shouyiriqi"){
+					arr.push(<li onClick={()=>{this.delme(item.filtertitle)}} key={arr.length}>{item.filtertitle} ： {item.v.b.year}年{item.v.b.month}月{item.v.b.day}~{item.v.e.year}年{item.v.e.month}月{item.v.e.day}</li>);
 				}
 			
 		});
