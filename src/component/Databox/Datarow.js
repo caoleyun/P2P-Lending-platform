@@ -1,18 +1,20 @@
 import React from 'react';
 
 class Datarow extends React.Component{
-	constructor({data}){
+	constructor({data,tablecol}){
 		super();
 	}
 
 	render(){
 		return (
 			<tr className="datarow">
-				<td>{this.props.data.name}</td>
-				<td>{this.props.data.school}</td>
-				<td>{this.props.data.target}</td>
-				<td>{this.props.data.need}</td>
-				<td>{this.props.data.done}</td>
+
+				{this.props.tablecol.map((item,index)=>{
+		 			if(item.show){
+		 				return <td key={index}>{this.props.data[item.fieldname]}</td>
+		 			}
+		 		})}
+
 			</tr>
 		)
 	}	
