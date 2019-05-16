@@ -1,5 +1,5 @@
 let initState={
-	"filters":{
+	"filters":{ //过滤初始化
 		"schools" : [],
 		"types":[],
 		"need":{"min":0,"max":1000},
@@ -12,7 +12,9 @@ let initState={
 			eday:23
 		}
 	},
-	"nowfilter":[]
+	"nowfilter":[//当前启用的过滤
+	],
+	"data":[]//数据
 }
 
 export default (state=initState,action)=>{
@@ -30,17 +32,6 @@ export default (state=initState,action)=>{
 		console.log(action.v);
 			return {
 				...state,
-				filters:{
-					...state.filters,
-					[action.title]:{
-						byear:action.v.b.year,
-						bmonth:action.v.b.month,
-						bday:action.v.b.day,
-						eyear:action.v.e.year,
-						emonth:action.v.e.month,
-						eday:action.v.e.day
-					}
-				},
 				nowfilter:[
 					...state.nowfilter,
 					{"filtertitle":action.title,"v":action.v}
@@ -52,6 +43,12 @@ export default (state=initState,action)=>{
 				nowfilter:state.nowfilter.filter((item)=>{
 					return item.filtertitle!=action.title;
 				})
+			}
+		case "FETCHDATA":
+
+			return{
+				...state,
+				data:action.data
 			}
 	}
 	return state;

@@ -2,16 +2,19 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Filterbar from './Filterbar/Filterbar.js';
 import Nowfilter from './Nowfilter/Nowfilter.js';
-import {fetchInitData,addfilter} from '../actions/touzhiaction.js';
+import {fetchInitData,addfilter,fetchData} from '../actions/touzhiaction.js';
 import Range from './Range/Range.js';
 import BECanlendar from './BECanlendar/BECanlendar.js';
+import Databox from './Databox/Databox.js';
 
 
 class Touzhi extends React.Component{
-	constructor({filters,dispatch,nowfilter}){
+	constructor({filters,dispatch,nowfilter,data}){
 		super();
-		//请求默认数据数据
+		//请求默认数据过滤
 		dispatch(fetchInitData());
+		//请求默认数据
+		dispatch(fetchData());
 	}
 	//当子组件 给我们传来数据时
 	pickHandler(title,v){
@@ -27,8 +30,8 @@ class Touzhi extends React.Component{
 			return "";
 		}else{
 			return (<div>
-				<div className="col-lg-2 filter_t text-right">{propsobj.title}</div>
-				<div className="col-lg-10">
+				<div className="col-lg-2 col-md-2 filter_t text-right">{propsobj.title}</div>
+				<div className="col-lg-10 col-md-10">
 					<Filterbar {...propsobj} />
 				</div>
 			</div>
@@ -45,8 +48,8 @@ class Touzhi extends React.Component{
 			return "";
 		}else{
 			return (<div>
-				<div className="col-lg-2 filter_t text-right">{propsobj.title}</div>
-				<div className="col-lg-10">
+				<div className="col-lg-2 col-md-2 filter_t text-right">{propsobj.title}</div>
+				<div className="col-lg-10 col-md-10">
 					<Range  {...propsobj} />
 				</div>
 			</div>
@@ -64,8 +67,8 @@ class Touzhi extends React.Component{
 			return "";
 		}else{
 			return (<div>
-				<div className="col-lg-2 filter_t text-right">{propsobj.title}</div>
-				<div className="col-lg-10">
+				<div className="col-lg-2 col-md-2 filter_t text-right">{propsobj.title}</div>
+				<div className="col-lg-10 col-md-10">
 					<BECanlendar  {...propsobj} />
 				</div>
 			</div>
@@ -154,6 +157,10 @@ class Touzhi extends React.Component{
 
 						</div>
 					</div>	
+
+					<hr /><br />
+					<Databox />
+
 				</div>
 			</section>
 		)

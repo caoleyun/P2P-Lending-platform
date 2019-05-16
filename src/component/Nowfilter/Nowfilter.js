@@ -38,10 +38,10 @@ class Nowfilter extends React.Component{
 			<div className="nowfilter">
 				<div className="row">
 					<div className="row">
-						<div className="col-lg-1">
+						<div className="col-lg-1 col-md-1">
 						当前过滤条件
 						</div>
-						<div className="col-lg-11">
+						<div className="col-lg-11 col-md-11">
 							<ul>
 								{this.shownowfilter()}
 							</ul>
