@@ -3,16 +3,15 @@ import $ from  'jquery/dist/jquery.min.js';
 
 
 class SetTableBox extends React.Component{
-	constructor({setSetTableBoxShow,tablecol}){
+	constructor({setSetTableBoxShow,tablecol,onsubmit}){
 		super();
 		this.state=(function(){
 			var o={};
 			tablecol.forEach(function(item){
-				o[item.fieldname]=item.show;
+				o[item.fieldchinesename]=item.show;
 			});
 			return o;
 		})();
-		console.log(this.state);
 	}
 
 	//组件上树后 调用
@@ -28,12 +27,30 @@ class SetTableBox extends React.Component{
 				<div className="innerbox" ref="innerbox">
 					<a href="javascript:;" className="closebtn" onClick={()=>{this.exit()}}>×</a>
 					<div className="text-left">
-						{
-							this.props.tablecol.map((item,index)=>{
-								return	<label key={index}><input type="checkbox"  checked={item.show} onChange={(event)=>{this.setc(item.fieldname,event)}} />{item.fieldchinesename}</label>
-							})
-						}
+						{this.showLabels()}
 					</div>
+					<input type="button" value="确定" onClick={()=>{this.props.onsubmit(this.state)}} />
+					<input type="button" value="取消全部" 
+						onClick={()=>{
+							for(let k in this.state){
+								this.setState({[k]:false,"姓名":true});
+							}
+						}}
+					/>
+					<input type="button" value="选择全部" 
+						onClick={()=>{
+							for(let k in this.state){
+								this.setState({[k]:true});
+							}
+						}}
+					/>
+					<input type="button" value="反选" 
+						onClick={()=>{
+							for(let k in this.state){
+								this.setState({[k]:!this.state[k],"姓名":true});
+							}
+						}}
+					/>
 				</div>
 				SetTableBox
 			</div>
@@ -50,9 +67,18 @@ class SetTableBox extends React.Component{
 
 	//设置选择的 input
 	setc=(fieldname,event)=>{
-		console.log(fieldname,event.target.checked);
-		console.log(this.state);
 		//改变state
+		this.setState({[fieldname]:event.target.checked});
+	}
+
+	//显示复选框
+	showLabels(){
+		var arr=[];
+		for(let k in this.state){
+			arr.push(<label   key={arr.length}><input type="checkbox" disabled={k=="姓名"}  checked={this.state[k]} onChange={(event)=>{this.setc(k,event)}} />{k}</label>)
+		}
+		return arr;
+		
 	}
 
 

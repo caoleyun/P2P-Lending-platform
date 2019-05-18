@@ -57,7 +57,19 @@ import './table.less';
 
  	//SetTableBox组件显示与否
  	showSetTableBox(){
- 		return this.state.settableboxshow?<SetTableBox setSetTableBoxShow={(this.setSetTableBoxShow).bind(this)} tablecol={this.state.tablecol}  />:"";
+ 		return this.state.settableboxshow?<SetTableBox setSetTableBoxShow={(this.setSetTableBoxShow).bind(this)} onsubmit={this.submithandler.bind(this)} tablecol={this.state.tablecol}  />:"";
+ 	}
+ 	//接收子组件  传回的数据
+ 	submithandler(data){
+ 		this.setState({
+ 			"settableboxshow":false,
+ 			"tablecol":this.state.tablecol.map((obj)=>{
+ 				return {
+ 					...obj,
+ 					"show":data[obj.fieldchinesename]
+ 				}
+ 			})
+ 		});
  	}
  	//关闭 开启 SetTableBox组件
  	setSetTableBoxShow(booleanvalue){

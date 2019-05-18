@@ -29,7 +29,6 @@ export default (state=initState,action)=>{
 				}
 			}
 		case "ADDFILTER":
-		console.log(action.v);
 			return {
 				...state,
 				nowfilter:[
