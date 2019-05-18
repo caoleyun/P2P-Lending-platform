@@ -7,12 +7,39 @@ export const fetchInitData=()=>{return (dispatch)=>{
 }}
 
 export const fetchData=()=>{return (dispatch)=>{
-	$.get("/api/data.json",function(data){
-		dispatch({"type":"FETCHDATA","data":data.results});
+	$.post("/api",{"filter":"[]"},function(data){
+		dispatch({"type":"FETCHDATA","data":data});
 	})
 }}
 
 
 
-export const addfilter=(title,v)=>{ return {"type":"ADDFILTER",title,v}}
-export const delfilter=(title)=>{return {"type":"DELFILTER" , title} }
+export const addfilter=(title,v,reducerkey)=>{ return (dispatch,getState)=>{
+	var nowfilter=getState().reducers.touzhireducers.nowfilter.concat([{"filtertitle":title,"v":v}]);
+	$.ajax({
+		"url":"/api",
+		"data":{"filter":JSON.stringify(nowfilter)},
+		"type":"post",
+		"traditional":true,
+		"success":function(data){
+			dispatch({"type":"ADDFILTER",title,v,reducerkey,data});
+		}
+	});
+}}
+
+export const delfilter=(title)=>{ return (dispatch,getState)=>{
+	var nowfilter=getState().reducers.touzhireducers.nowfilter.filter(function(item){
+		return item.filtertitle!=title;
+	});
+	$.ajax({
+		"url":"/api",
+		"data":{"filter":JSON.stringify(nowfilter)},
+		"type":"post",
+		"traditional":true,
+		"success":function(data){
+			dispatch({"type":"DELFILTER",title,data});
+		}
+	});
+}}
+
+

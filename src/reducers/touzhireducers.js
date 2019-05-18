@@ -34,20 +34,23 @@ export default (state=initState,action)=>{
 				nowfilter:[
 					...state.nowfilter,
 					{"filtertitle":action.title,"v":action.v}
-				]
+				],
+				"data":action.data.results
+
 			}
 		case "DELFILTER":
 			return {
 				...state,
 				nowfilter:state.nowfilter.filter((item)=>{
 					return item.filtertitle!=action.title;
-				})
+				}),
+				"data":action.data.results
 			}
 		case "FETCHDATA":
 
 			return{
 				...state,
-				data:action.data
+				data:action.data.results
 			}
 	}
 	return state;
