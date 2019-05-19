@@ -22,7 +22,8 @@ import './table.less';
  				{"fieldname":"type","fieldchinesename":"类型","show":false},
  				{"fieldname":"rate","fieldchinesename":"回报率","show":true},
  				{"fieldname":"credit","fieldchinesename":"信用","show":false},
- 				{"fieldname":"province","fieldchinesename":"省份","show":false}
+ 				{"fieldname":"province","fieldchinesename":"省份","show":false},
+ 				{"fieldname":"earnings_time","fieldchinesename":"收益日期","show":true}
  			]
  		}
  	}
@@ -31,6 +32,7 @@ import './table.less';
  	render(){
  		return (
  			<div className="databox">
+ 				共{this.props.data.length}条数据
  				<div className="text-right">
  					<a href="javascript:;" onClick={()=>{this.setSetTableBoxShow(true)}}>设置表格显示字段</a>
  					{this.showSetTableBox()}
